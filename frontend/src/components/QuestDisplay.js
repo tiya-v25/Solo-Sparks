@@ -10,4 +10,3 @@ const QuestDisplay = ({ quest }) => {
 };
 
 export default QuestDisplay;
-

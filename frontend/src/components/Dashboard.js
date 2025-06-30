@@ -11,7 +11,7 @@ const Dashboard = () => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("/user", {
+        const res = await axios.get("/user/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPoints(res.data.points);
