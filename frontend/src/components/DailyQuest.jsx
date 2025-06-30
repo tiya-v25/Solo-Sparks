@@ -1,13 +1,13 @@
-// frontend/src/pages/QuestPage.jsx
+// src/components/DailyQuest.jsx
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosConfig";
 
-function QuestPage() {
-  const [day, setDay] = useState("");
+function DailyQuest() {
   const [quest, setQuest] = useState("");
+  const [day, setDay] = useState("");
   const [completed, setCompleted] = useState(false);
-  const [media, setMedia] = useState(null);
   const [message, setMessage] = useState("");
+  const [media, setMedia] = useState(null);
 
   useEffect(() => {
     const fetchDailyQuest = async () => {
@@ -16,12 +16,11 @@ function QuestPage() {
         const res = await axios.get("/quest/daily", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setDay(res.data.day);
         setQuest(res.data.quest);
+        setDay(res.data.day);
         setCompleted(res.data.completed);
       } catch (err) {
         setMessage("Failed to load daily quest.");
-        console.error(err.message);
       }
     };
 
@@ -45,17 +44,16 @@ function QuestPage() {
       setCompleted(true);
     } catch (err) {
       setMessage(err.response?.data?.message || "Failed to submit quest");
-      console.error(err.message);
     }
   };
 
   return (
-    <div className="container mt-4">
-      <h2>📅 {day}'s Quest</h2>
+    <div className="quest-box">
+      <h3>📅 {day}'s Quest</h3>
       <p>{quest}</p>
 
       {completed ? (
-        <p className="text-success">✅ Quest already completed</p>
+        <p style={{ color: "green" }}>✅ Already Completed</p>
       ) : (
         <>
           <input
@@ -63,15 +61,15 @@ function QuestPage() {
             accept="image/*,audio/*,video/*"
             onChange={(e) => setMedia(e.target.files[0])}
           />
-          <button onClick={handleSubmit} className="btn btn-success mt-2">
+          <button className="btn btn-success mt-2" onClick={handleSubmit}>
             Mark as Done
           </button>
         </>
       )}
 
-      {message && <p className="mt-3">{message}</p>}
+      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
     </div>
   );
 }
 
-export default QuestPage;
+export default DailyQuest;

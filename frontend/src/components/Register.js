@@ -1,73 +1,52 @@
-// frontend/src/pages/Register.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// src/components/Register.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+function Register() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
-
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+    setFormData({...formData, [e.target.name]: e.target.value});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', formData);
-      const { token } = res.data;
+    setError("");
 
-      localStorage.setItem('token', token); // ✅ Save token
-      navigate('/dashboard'); // or '/assessment' based on your flow
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Registration failed");
+      }
+
+      localStorage.setItem("token", data.token);
+      navigate("/dashboard");
     } catch (err) {
-      console.error('Register error:', err.response?.data?.message);
-      setError(err.response?.data?.message || 'Registration failed.');
+      setError(err.message);
     }
   };
 
   return (
-    <div className="auth-form">
+    <div className="container mt-5">
       <h2>Register</h2>
+      {error && <p className="text-danger">{error}</p>}
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Your name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email address"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Sign Up</button>
+        <input name="name" type="text" placeholder="Name" onChange={handleChange} required className="form-control mb-2" />
+        <input name="email" type="email" placeholder="Email" onChange={handleChange} required className="form-control mb-2" />
+        <input name="password" type="password" placeholder="Password" onChange={handleChange} required className="form-control mb-2" />
+        <button type="submit" className="btn btn-dark">Register</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
-};
+}
 
 export default Register;

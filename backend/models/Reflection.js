@@ -1,17 +1,19 @@
-// backend/models/Reflection.js
-
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const reflectionSchema = new mongoose.Schema({
   mood: {
     type: String,
     required: true,
-    enum: ['happy', 'sad', 'angry', 'anxious'], // or customize your moods
+    enum: ['happy', 'sad', 'angry', 'anxious'],
   },
   message: {
     type: String,
     required: true,
     trim: true,
+  },
+  mediaUrl: {
+    type: String,      // ⬅️ Stores the Cloudinary URL
+    default: null,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -19,9 +21,9 @@ const reflectionSchema = new mongoose.Schema({
     required: true,
   }
 }, {
-  timestamps: true, // adds createdAt and updatedAt
+  timestamps: true,
 });
 
 const Reflection = mongoose.model('Reflection', reflectionSchema);
 
-export default Reflection;
+module.exports = Reflection;

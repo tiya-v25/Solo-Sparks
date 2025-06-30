@@ -1,20 +1,19 @@
-// frontend/src/pages/MoodPage.js
 import React, { useState } from "react";
-import axios from "axios";
-import "./MoodPages.css"; // Optional: your custom styles
+import axios from "../utils/axiosConfig.js";
+import "./MoodPages.css";
 
 const MoodPage = () => {
   const [mood, setMood] = useState("");
   const [quest, setQuest] = useState("");
   const [reflection, setReflection] = useState("");
   const [message, setMessage] = useState("");
-  const [lastQuest, setLastQuest] = useState("");
+  const [media, setMedia] = useState(null);
 
   const getQuest = async () => {
     if (!mood) return alert("Please select a mood first!");
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/quest/${mood}`);
+      const res = await axios.get(`/quest/${mood}`);
       setQuest(res.data.quest);
     } catch (err) {
       console.error("Error fetching quest:", err);
@@ -25,25 +24,26 @@ const MoodPage = () => {
   const submitReflection = async () => {
     try {
       const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("mood", mood);
+      formData.append("message", reflection);
+      if (media) {
+        formData.append("media", media);
+      }
 
-      const res = await axios.post(
-        "http://localhost:5000/api/reflection",
-        { mood, quest, reflection },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.post(`/reflection`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       setMessage(res.data.message || "Reflection submitted!");
-      setLastQuest(quest);
-      alert("Reflection submitted! 🌟 Spark Points earned.");
-
-      // Reset fields
-      setReflection("");
-      setQuest("");
+      alert("Reflection submitted with media! 🌟");
       setMood("");
+      setQuest("");
+      setReflection("");
+      setMedia(null);
     } catch (err) {
       console.error("Error submitting reflection:", err);
       alert("Failed to submit reflection.");
@@ -83,6 +83,13 @@ const MoodPage = () => {
             required
           />
 
+          <input
+            type="file"
+            accept="image/*,audio/*,video/*"
+            onChange={(e) => setMedia(e.target.files[0])}
+            className="media-upload-input"
+          />
+
           <button onClick={submitReflection} className="submit-btn">
             Submit Reflection
           </button>
@@ -92,7 +99,6 @@ const MoodPage = () => {
       {message && (
         <div className="submission-message">
           <p>{message}</p>
-          <p>Your quest was: {lastQuest}</p>
         </div>
       )}
     </div>
