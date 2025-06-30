@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 
-// Add points to a user
+
 router.post('/add', async (req, res) => {
   const { email, pointsToAdd } = req.body;
   try {
@@ -17,7 +17,6 @@ router.post('/add', async (req, res) => {
   }
 });
 
-// Get current points
 router.get('/:email', async (req, res) => {
   try {
     const user = await User.findOne({ email: req.params.email });
@@ -28,6 +27,5 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-// module.exports = router;
 export default router;
 

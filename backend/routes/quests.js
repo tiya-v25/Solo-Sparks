@@ -4,12 +4,11 @@ const DailyQuestCompletion = require("../models/DailyQuestCompletion");
 const authMiddleware = require("../middleware/authMiddleware");
 const User = require("../models/User");
 
-// File upload setup
+
 const multer = require("multer");
 const upload = multer({ storage: multer.memoryStorage() });
 const { uploadToCloudinary } = require("../utils/cloudinary");
 
-// 🌤️ Daily rotating quests
 const dailyQuests = {
   Monday: "Compliment 3 people today 😊",
   Tuesday: "Take a 10-minute walk 🚶‍♀️",
@@ -20,7 +19,6 @@ const dailyQuests = {
   Sunday: "Journal your week in 3 lines 📝",
 };
 
-// ✅ GET Daily Quest
 router.get("/daily", authMiddleware, async (req, res) => {
   const day = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const quest = dailyQuests[day] || "Stay mindful today 🌱";
@@ -38,7 +36,7 @@ router.get("/daily", authMiddleware, async (req, res) => {
   });
 });
 
-// ✅ POST /daily/complete — Mark daily quest complete (with optional media)
+
 router.post(
   "/daily/complete",
   authMiddleware,

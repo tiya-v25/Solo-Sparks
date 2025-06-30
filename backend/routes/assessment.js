@@ -4,7 +4,6 @@ const Assessment = require('../models/Assessment');
 
 const router = express.Router();
 
-// Save assessment
 router.post('/', authMiddleware, async (req, res) => {
   try {
     const { answers } = req.body;
@@ -22,7 +21,7 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// Fetch assessments
+
 router.get('/', authMiddleware, async (req, res) => {
   try {
     const assessments = await Assessment.find({ userId: req.user.id }).sort({ createdAt: -1 });

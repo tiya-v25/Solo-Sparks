@@ -3,7 +3,6 @@ const router = express.Router();
 const Reflection = require("../models/Reflection");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// GET /api/analytics
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const reflections = await Reflection.find({ userId: req.user.id }).sort({ createdAt: -1 });

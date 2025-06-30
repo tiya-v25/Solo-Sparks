@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../utils/axiosConfig'; // Make sure this handles baseURL
+import axios from '../utils/axiosConfig'; 
 import './MoodPages.css'; 
 
 const RewardsPage = () => {

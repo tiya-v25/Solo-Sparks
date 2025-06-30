@@ -1,15 +1,15 @@
-// backend/routes/reflections.js
+
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const { storage } = require("../utils/cloudinary"); // ⬅️ from utils setup
+const { storage } = require("../utils/cloudinary"); 
 const upload = multer({ storage });
 
 const Reflection = require("../models/Reflection");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// ✅ Create a new reflection with optional media upload
+
 router.post("/", authMiddleware, upload.single("media"), async (req, res) => {
   const { mood, message } = req.body;
 
@@ -17,13 +17,13 @@ router.post("/", authMiddleware, upload.single("media"), async (req, res) => {
     const newReflection = new Reflection({
       mood,
       message,
-      mediaUrl: req.file?.path || null, // ⬅️ Cloudinary file URL (optional)
+      mediaUrl: req.file?.path || null, 
       userId: req.user.id,
     });
 
     await newReflection.save();
 
-    // 🟢 Give 10 points to the user
+    
     const user = await User.findById(req.user.id);
     if (user) {
       user.points += 10;
@@ -40,7 +40,6 @@ router.post("/", authMiddleware, upload.single("media"), async (req, res) => {
   }
 });
 
-// ✅ Get all reflections for the logged-in user
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const reflections = await Reflection.find({ userId: req.user.id }).sort({ createdAt: -1 });

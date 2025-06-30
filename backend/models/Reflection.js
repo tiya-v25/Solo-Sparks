@@ -12,7 +12,7 @@ const reflectionSchema = new mongoose.Schema({
     trim: true,
   },
   mediaUrl: {
-    type: String,      // ⬅️ Stores the Cloudinary URL
+    type: String,      
     default: null,
   },
   userId: {
