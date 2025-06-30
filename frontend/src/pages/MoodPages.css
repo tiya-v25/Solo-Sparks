@@ -1,0 +1,41 @@
+.mood-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #fff0f6;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mood-select, .reflection-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+.fetch-btn, .submit-btn {
+  background-color: #ff7eb9;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+.fetch-btn:hover, .submit-btn:hover {
+  background-color: #ff4ea1;
+}
+
+.quest-box {
+  margin-top: 30px;
+  background-color: #fceaff;
+  padding: 20px;
+  border-radius: 15px;
+}
