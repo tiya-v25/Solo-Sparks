@@ -13,10 +13,10 @@ function Navbar() {
       <h4 className="ms-3">Solo Sparks</h4>
       <div className="d-flex gap-4 me-4">
         <Link to="/dashboard" className="text-light">Dashboard</Link>
-        <Link to="/quests" className="text-light">Quests</Link>
+        <Link to="/daily-quest" className="text-light">Daily Quest</Link>
         <Link to="/mood" className="text-light">Mood</Link>
         <Link to="/rewards" className="text-light">Rewards</Link>
-        <Link to="/analytics" className="text-light">Analytics</Link>
+      
 
         <button
           className="btn btn-sm btn-outline-light"

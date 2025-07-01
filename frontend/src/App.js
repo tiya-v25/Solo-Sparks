@@ -13,8 +13,9 @@ import Assessment from "./components/Assessment.js";
 import MoodPage from "./pages/MoodPage.js";
 import RewardsPage from "./pages/RewardsPage.jsx";
 import PrivateRoute from './components/PrivateRoute.jsx';
-import Analytics from "./components/Analytics.jsx"; 
-import AnalyticsPage from "./pages/AnalyticsPage.jsx";
+import DailyQuest from './components/DailyQuest.jsx';
+
+
 
 
 
@@ -35,9 +36,9 @@ function App() {
         <Route path="/assessment" element={<PrivateRoute><Assessment /></PrivateRoute>} />
         <Route path="/mood" element={<PrivateRoute><MoodPage /></PrivateRoute>} />
         <Route path="/rewards" element={<PrivateRoute><RewardsPage /></PrivateRoute>} />
-        <Route path="/analytics" element={<PrivateRoute><Analytics /> </PrivateRoute>}/>
-        <Route path="/analytics" element={<PrivateRoute><AnalyticsPage /></PrivateRoute>}/>
+        <Route path="/daily-quest" element={<PrivateRoute><DailyQuest /></PrivateRoute>}/>
 
+       
 
         {/* Fallback route */}
         <Route path="*" element={<Login />} />

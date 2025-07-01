@@ -1,75 +1,79 @@
-// src/components/DailyQuest.jsx
-import React, { useEffect, useState } from "react";
-import axios from "../utils/axiosConfig";
+import React, { useEffect, useState } from 'react';
+import axios from '../utils/axiosConfig';
 
-function DailyQuest() {
-  const [quest, setQuest] = useState("");
-  const [day, setDay] = useState("");
+const DailyQuest = () => {
+  const [day, setDay] = useState('');
+  const [quest, setQuest] = useState('');
   const [completed, setCompleted] = useState(false);
-  const [message, setMessage] = useState("");
   const [media, setMedia] = useState(null);
+  const [text, setText] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const fetchDailyQuest = async () => {
+    const fetchQuest = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get("/quest/daily", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setQuest(res.data.quest);
+        const res = await axios.get('/quest/daily');
         setDay(res.data.day);
+        setQuest(res.data.quest);
         setCompleted(res.data.completed);
       } catch (err) {
-        setMessage("Failed to load daily quest.");
+        setMessage('Error fetching daily quest');
+        console.error(err);
       }
     };
-
-    fetchDailyQuest();
+    fetchQuest();
   }, []);
 
   const handleSubmit = async () => {
     try {
-      const token = localStorage.getItem("token");
       const formData = new FormData();
-      if (media) formData.append("media", media);
+      formData.append('description', text); // ✅ text input
+      if (media) formData.append('media', media); // ✅ media input
 
-      const res = await axios.post("/quest/daily/complete", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await axios.post('/quest/daily/complete', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
       setMessage(res.data.message);
       setCompleted(true);
     } catch (err) {
-      setMessage(err.response?.data?.message || "Failed to submit quest");
+      setMessage(err.response?.data?.message || 'Submission failed');
+      console.error(err);
     }
   };
 
   return (
-    <div className="quest-box">
-      <h3>📅 {day}'s Quest</h3>
+    <div className="container mt-4">
+      <h2>🗓️ {day}'s Quest</h2>
       <p>{quest}</p>
 
       {completed ? (
-        <p style={{ color: "green" }}>✅ Already Completed</p>
+        <p className="text-success">✅ Already completed!</p>
       ) : (
         <>
+          <textarea
+            className="form-control mb-3"
+            placeholder="Write something about your quest..."
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
+
           <input
             type="file"
             accept="image/*,audio/*,video/*"
             onChange={(e) => setMedia(e.target.files[0])}
+            className="form-control mb-3"
           />
-          <button className="btn btn-success mt-2" onClick={handleSubmit}>
-            Mark as Done
+
+          <button onClick={handleSubmit} className="btn btn-success">
+            Submit Quest
           </button>
         </>
       )}
 
-      {message && <p style={{ marginTop: "1rem" }}>{message}</p>}
+      {message && <p className="mt-3">{message}</p>}
     </div>
   );
-}
+};
 
 export default DailyQuest;
