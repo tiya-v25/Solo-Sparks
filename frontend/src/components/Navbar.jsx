@@ -12,6 +12,7 @@ function Navbar() {
     <nav className="bg-dark text-light p-3 d-flex justify-content-between">
       <h4 className="ms-3">Solo Sparks</h4>
       <div className="d-flex gap-4 me-4">
+
         <Link to="/dashboard" className="text-light">Dashboard</Link>
         <Link to="/daily-quest" className="text-light">Daily Quest</Link>
         <Link to="/mood" className="text-light">Mood</Link>

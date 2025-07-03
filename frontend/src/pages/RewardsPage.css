@@ -1,0 +1,82 @@
+/* RewardsPage.css */
+
+.rewards-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(to right, #fff0f5, #ffe4e1);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.rewards-page h2 {
+  font-size: 2rem;
+  color: #d63384;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.message {
+  margin-top: 1rem;
+  font-weight: 500;
+  color: #28a745; /* green success */
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.rewards-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.reward-card {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 260px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.reward-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.reward-card h3 {
+  font-size: 1.3rem;
+  color: #343a40;
+  margin-bottom: 0.5rem;
+}
+
+.reward-card p {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1.2rem;
+}
+
+.reward-card button {
+  background-color: #d63384;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reward-card button:hover:not(:disabled) {
+  background-color: #b0306b;
+}
+
+.reward-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

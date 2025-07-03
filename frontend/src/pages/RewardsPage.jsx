@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../utils/axiosConfig'; 
-import './MoodPages.css'; 
+import axios from '../utils/axiosConfig.js'; 
+import './RewardsPage.css';
 
 const RewardsPage = () => {
   const [rewards, setRewards] = useState([]);

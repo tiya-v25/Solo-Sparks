@@ -27,8 +27,8 @@ const DailyQuest = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append('description', text); // ✅ text input
-      if (media) formData.append('media', media); // ✅ media input
+      formData.append('description', text); 
+      if (media) formData.append('media', media); 
 
       const res = await axios.post('/quest/daily/complete', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
